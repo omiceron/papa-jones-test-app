@@ -5,44 +5,21 @@ import {
   FlatList,
   Text,
   View,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native'
 import {connect} from 'react-redux'
 import {driversSelector, driversSortedSelector} from '../selectors'
-import {addDriver} from '../actions'
+import {addDriver, deleteDriver} from '../actions'
 import colors from '../constants/Colors'
-import FastestBus from '../components/FastestBus'
+import DriverCard from '../components/DriverCard'
 
-@connect(state => ({drivers: driversSelector(state)}), {addDriver})
+@connect(state => ({drivers: driversSelector(state)}), {addDriver, deleteDriver})
 class DriversScreen extends React.Component {
   static navigationOptions = {
     header: null
   }
 
-  renderItem = ({item}) => {
-    return <View style = {styles.itemContainer}>
-      <View style = {styles.itemText}>
-        <Text>
-          {item.firstName} {item.middleName} {item.lastName}
-        </Text>
-      </View>
-
-      <View style = {styles.itemText}>
-        <Text>
-          {item.dateOfBirth.toDateString()}
-        </Text>
-      </View>
-
-      <View style = {styles.itemText}>
-        <Text>
-          {item.buses}
-        </Text>
-      </View>
-
-      <FastestBus buses = {item.buses}/>
-
-    </View>
-  }
+  renderItem = ({item}) => <DriverCard {...item} onPress = {() => this.props.deleteDriver(item.id)}/>
 
   handleSubmit = () => {
     this.props.navigation.push('AddDriver')
@@ -60,11 +37,11 @@ class DriversScreen extends React.Component {
           // ListFooterComponent = {}
         />
 
-          <TouchableOpacity onPress = {this.handleSubmit}>
-            <View style = {[styles.field, styles.button]}>
-              <Text style = {[styles.getStartedText, {color: 'white'}]}>Add driver</Text>
-            </View>
-          </TouchableOpacity>
+        <TouchableOpacity onPress = {this.handleSubmit}>
+          <View style = {[styles.field, styles.button]}>
+            <Text style = {[styles.getStartedText, {color: 'white'}]}>Add driver</Text>
+          </View>
+        </TouchableOpacity>
 
       </SafeAreaView>
     )
