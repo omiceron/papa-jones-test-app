@@ -1,4 +1,4 @@
-import {Record, OrderedMap, Seq, List} from 'immutable'
+import {Record, OrderedMap, Seq} from 'immutable'
 import {ADD, BUS, DELETE, DRIVER} from '../constants/actions'
 
 export const DriverRecord = Record({

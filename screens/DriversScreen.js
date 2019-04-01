@@ -21,7 +21,6 @@ class DriversScreen extends React.Component {
 
   renderItem = ({item}) => {
     return <View style = {styles.itemContainer}>
-
       <View style = {styles.itemText}>
         <Text>
           {item.firstName} {item.middleName} {item.lastName}
@@ -50,7 +49,6 @@ class DriversScreen extends React.Component {
   }
 
   render() {
-    // console.log(this.props.drivers)
     return (
       <SafeAreaView style = {styles.container}>
         <FlatList
@@ -59,8 +57,6 @@ class DriversScreen extends React.Component {
           data = {this.props.drivers}
           renderItem = {this.renderItem}
           keyExtractor = {({id}) => id}
-          // onEndReached = {}
-          // onEndReachedThreshold = {0.1}
           // ListFooterComponent = {}
         />
 
