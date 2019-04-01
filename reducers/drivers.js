@@ -24,6 +24,9 @@ export default (drivers = new DriversReducerRecord(), action) => {
     case DRIVER + ADD:
       return drivers.setIn(['entities', randomId], new DriverRecord({...payload, id: randomId}))
 
+    case DRIVER + DELETE:
+      return drivers.deleteIn(['entities', payload.id])
+
     case BUS + DELETE:
       return drivers.update('entities', (entities) => {
         const keys = entities.keySeq()

@@ -46,3 +46,10 @@ export function addDriver(driver) {
     generateId: true
   }
 }
+
+export function deleteDriver(id) {
+  return {
+    type: DRIVER + DELETE,
+    payload: {id},
+  }
+}
