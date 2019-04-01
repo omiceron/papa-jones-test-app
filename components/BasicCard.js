@@ -8,16 +8,20 @@ import PropTypes from 'prop-types'
 
 class BasicCard extends Component {
   static propTypes = {
-    children: PropTypes.node
+    children: PropTypes.node,
+    onPress: PropTypes.func
   }
 
   render() {
     const {onPress, children, ...rest} = this.props
-    return <TouchableOpacity onPress = {onPress}>
+
+    const InteractionComponent = onPress ? TouchableOpacity : View
+
+    return <InteractionComponent onPress = {onPress}>
       <View {...rest} style = {styles.container}>
         {children}
       </View>
-    </TouchableOpacity>
+    </InteractionComponent>
   }
 }
 
@@ -27,8 +31,9 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
-    margin: 20,
-    backgroundColor: 'rgba(127,127,127, 0.1)'
+    margin: 10,
+    justifyContent: 'center',
+    backgroundColor: '#ffffff',
   }
 })
 

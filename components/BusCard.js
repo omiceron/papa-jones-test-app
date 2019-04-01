@@ -2,11 +2,10 @@ import React, {Component} from 'react'
 import {
   StyleSheet,
   Text,
-  View,
-  TouchableOpacity
+  View
 } from 'react-native'
 import PropTypes from 'prop-types'
-import BasicCard from './BasicCard'
+import SegmentedCard from './SegmentedCard'
 
 class BusCard extends Component {
   static propTypes = {
@@ -15,40 +14,49 @@ class BusCard extends Component {
       speed: PropTypes.string.isRequired,
       year: PropTypes.string.isRequired,
       onPress: PropTypes.func
-    })
+    }).isRequired
   }
 
   render() {
-    const {onPress} = this.props
+    const {onPress, LeftComponent} = this.props
     const {model, speed, year} = this.props.bus
 
-    return <BasicCard onPress = {onPress}>
+    return <SegmentedCard onPress = {onPress} LeftComponent = {LeftComponent}>
+
         <View style = {styles.textView}>
-          <Text>
+          <Text style = {styles.text}>
             {model}
           </Text>
         </View>
 
         <View style = {styles.textView}>
-          <Text>
-            {speed}
-          </Text>
-        </View>
-
-        <View style = {styles.textView}>
-          <Text>
+          <Text style = {styles.text}>
             {year}
           </Text>
         </View>
-    </BasicCard>
+
+      <View style = {styles.textView}>
+        <Text style = {styles.text}>
+          {speed} km/h
+        </Text>
+      </View>
+
+    </SegmentedCard>
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-around',
+  },
   textView: {
     flex: 1,
     justifyContent: 'center',
-    padding: 10
+  },
+  text: {
+    fontSize: 17,
+    color: 'rgba(96,100,109, 1)'
   }
 })
 

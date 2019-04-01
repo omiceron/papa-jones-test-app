@@ -3,11 +3,10 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
 } from 'react-native'
 import PropTypes from 'prop-types'
 import FastestBus from '../components/FastestBus'
-import BasicCard from './BasicCard'
+import SegmentedCard from './SegmentedCard'
 
 class DriverCard extends Component {
   static propTypes = {
@@ -26,7 +25,7 @@ class DriverCard extends Component {
     const {firstName, middleName, lastName, buses, dateOfBirth} = this.props.driver
     const date = dateOfBirth.toDateString()
 
-    return <BasicCard onPress = {onPress}>
+    return <SegmentedCard onPress = {onPress} LeftComponent = {() => <FastestBus buses = {buses}/>}>
       <View style = {styles.textView}>
         <Text>
           {firstName} {middleName} {lastName}
@@ -45,8 +44,7 @@ class DriverCard extends Component {
         </Text>
       </View>
 
-      <FastestBus buses = {buses}/>
-    </BasicCard>
+    </SegmentedCard>
   }
 }
 

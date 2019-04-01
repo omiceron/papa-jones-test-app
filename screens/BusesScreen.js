@@ -11,19 +11,22 @@ import {
 import colors from '../constants/Colors'
 import {busesSelector, busesSortedSelector} from '../selectors'
 import {connect} from 'react-redux'
-import {addBus, deleteBus} from '../actions'
+import {addBus} from '../actions'
 import BusCard from '../components/BusCard'
+import Separator from '../components/Separator'
 
-@connect(state => ({buses: busesSelector(state)}), {addBus, deleteBus})
+@connect(state => ({buses: busesSelector(state)}), {addBus})
 class BusesScreen extends React.Component {
   static navigationOptions = {
     header: null
   }
 
-  renderItem = ({item}) => <BusCard
-    bus = {item}
-    onPress = {() => this.props.deleteDriver(item.id)}
-  />
+  renderItem = ({item}) => (
+    <BusCard
+      bus = {item}
+      onPress = {() => this.props.navigation.navigate('EditBus', {id: item.id})}
+    />
+  )
 
   handleSubmit = () => {
     this.props.navigation.push('AddBus')
@@ -34,7 +37,7 @@ class BusesScreen extends React.Component {
       <SafeAreaView style = {styles.container}>
         <FlatList
           // contentContainerStyle = {}
-          // ItemSeparatorComponent = {}
+          ItemSeparatorComponent = {Separator}
           data = {this.props.buses}
           renderItem = {this.renderItem}
           keyExtractor = {({id}) => id}
@@ -42,7 +45,9 @@ class BusesScreen extends React.Component {
         />
         <TouchableOpacity onPress = {this.handleSubmit}>
           <View style = {[styles.field, styles.button]}>
-            <Text style = {[styles.getStartedText, {color: 'white'}]}>Add bus</Text>
+            <Text style = {[styles.getStartedText, {color: 'white'}]}>
+              Add bus
+            </Text>
           </View>
         </TouchableOpacity>
       </SafeAreaView>
