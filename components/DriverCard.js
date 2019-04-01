@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 import FastestBus from '../components/FastestBus'
+import BasicCard from './BasicCard'
 
 class DriverCard extends Component {
   static propTypes = {
@@ -25,43 +26,31 @@ class DriverCard extends Component {
     const {firstName, middleName, lastName, buses, dateOfBirth} = this.props.driver
     const date = dateOfBirth.toDateString()
 
-    return <TouchableOpacity onPress = {onPress}>
-      <View style = {styles.container}>
-
-        <View style = {styles.textView}>
-          <Text>
-            {firstName} {middleName} {lastName}
-          </Text>
-        </View>
-
-        <View style = {styles.textView}>
-          <Text>
-            {date}
-          </Text>
-        </View>
-
-        <View style = {styles.textView}>
-          <Text>
-            {buses}
-          </Text>
-        </View>
-
-        <FastestBus buses = {buses}/>
-
+    return <BasicCard onPress = {onPress}>
+      <View style = {styles.textView}>
+        <Text>
+          {firstName} {middleName} {lastName}
+        </Text>
       </View>
-    </TouchableOpacity>
+
+      <View style = {styles.textView}>
+        <Text>
+          {date}
+        </Text>
+      </View>
+
+      <View style = {styles.textView}>
+        <Text>
+          {buses}
+        </Text>
+      </View>
+
+      <FastestBus buses = {buses}/>
+    </BasicCard>
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    height: 60,
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    margin: 20,
-    backgroundColor: 'rgba(127,127,127, 0.1)'
-  },
   textView: {
     flex: 1,
     justifyContent: 'center',

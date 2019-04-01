@@ -12,6 +12,7 @@ import colors from '../constants/Colors'
 import {busesSelector, busesSortedSelector} from '../selectors'
 import {connect} from 'react-redux'
 import {addBus, deleteBus} from '../actions'
+import BusCard from '../components/BusCard'
 
 @connect(state => ({buses: busesSelector(state)}), {addBus, deleteBus})
 class BusesScreen extends React.Component {
@@ -19,31 +20,10 @@ class BusesScreen extends React.Component {
     header: null
   }
 
-  renderItem = ({item}) => {
-    return <TouchableOpacity onPress = {() => this.props.navigation.navigate('EditBus', {id: item.id})}>
-      <View style = {styles.itemContainer}>
-
-        <View style = {styles.itemText}>
-          <Text>
-            {item.model}
-          </Text>
-        </View>
-
-        <View style = {styles.itemText}>
-          <Text>
-            {item.speed}
-          </Text>
-        </View>
-
-        <View style = {styles.itemText}>
-          <Text>
-            {item.year}
-          </Text>
-        </View>
-
-      </View>
-    </TouchableOpacity>
-  }
+  renderItem = ({item}) => <BusCard
+    bus = {item}
+    onPress = {() => this.props.deleteDriver(item.id)}
+  />
 
   handleSubmit = () => {
     this.props.navigation.push('AddBus')
@@ -58,8 +38,6 @@ class BusesScreen extends React.Component {
           data = {this.props.buses}
           renderItem = {this.renderItem}
           keyExtractor = {({id}) => id}
-          // onEndReached = {}
-          // onEndReachedThreshold = {0.1}
           // ListFooterComponent = {}
         />
         <TouchableOpacity onPress = {this.handleSubmit}>
@@ -78,19 +56,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'center'
-  },
-  itemContainer: {
-    height: 60,
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    margin: 20,
-    backgroundColor: 'rgba(127,127,127, 0.1)'
-  },
-  itemText: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 10
   },
   field: {
     height: 45,
