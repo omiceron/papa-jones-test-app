@@ -19,7 +19,10 @@ class DriversScreen extends React.Component {
     header: null
   }
 
-  renderItem = ({item}) => <DriverCard {...item} onPress = {() => this.props.deleteDriver(item.id)}/>
+  renderItem = ({item}) => <DriverCard
+    driver = {item}
+    onPress = {() => this.props.deleteDriver(item.id)}
+  />
 
   handleSubmit = () => {
     this.props.navigation.push('AddDriver')

@@ -10,16 +10,19 @@ import FastestBus from '../components/FastestBus'
 
 class DriverCard extends Component {
   static propTypes = {
-    firstName: PropTypes.string.isRequired,
-    middleName: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired,
-    buses: PropTypes.array.isRequired,
-    dateOfBirth: PropTypes.object.isRequired,
-    onPress: PropTypes.func
+    driver: PropTypes.shape({
+      firstName: PropTypes.string.isRequired,
+      middleName: PropTypes.string.isRequired,
+      lastName: PropTypes.string.isRequired,
+      buses: PropTypes.object.isRequired,
+      // dateOfBirth: PropTypes.object.isRequired,
+      onPress: PropTypes.func
+    })
   }
 
   render() {
-    const {firstName, middleName, lastName, buses, dateOfBirth, onPress} = this.props
+    const {onPress} = this.props
+    const {firstName, middleName, lastName, buses, dateOfBirth} = this.props.driver
     const date = dateOfBirth.toDateString()
 
     return <TouchableOpacity onPress = {onPress}>
