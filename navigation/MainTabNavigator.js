@@ -5,7 +5,6 @@ import {createStackNavigator, createBottomTabNavigator} from 'react-navigation'
 import TabBarIcon from '../components/TabBarIcon'
 import HomeScreen from '../screens/HomeScreen'
 import DriversScreen from '../screens/DriversScreen'
-import SettingsScreen from '../screens/SettingsScreen'
 import BusesScreen from '../screens/BusesScreen'
 import AddBusFormScreen from '../screens/AddBusFormScreen'
 import AddDriverFormScreen from '../screens/AddDriverFormScreen'
@@ -59,24 +58,8 @@ DriversStack.navigationOptions = {
     />
   )
 }
-
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen
-})
-
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
-  tabBarIcon: ({focused}) => (
-    <TabBarIcon
-      focused = {focused}
-      name = {Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
-    />
-  )
-}
-
 export default createBottomTabNavigator({
   HomeStack,
   BusesStack,
   DriversStack,
-  SettingsStack
 })
