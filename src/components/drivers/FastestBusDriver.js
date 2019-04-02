@@ -5,7 +5,7 @@ import {
   Text
 } from 'react-native'
 import {connect} from 'react-redux'
-import {distanceSelector, fastestBusOfDriverSelector} from '../selectors'
+import {distanceSelector, fastestBusOfDriverSelector} from '../../selectors/index'
 import DriverCard from './DriverCard'
 
 @connect((state, props) => ({

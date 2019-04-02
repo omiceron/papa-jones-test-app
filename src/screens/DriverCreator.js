@@ -10,55 +10,44 @@ import {
   ScrollView
 } from 'react-native'
 import {connect} from 'react-redux'
-import {driverSelector} from '../selectors'
-import {saveDriver, deleteDriver} from '../actions'
-import BasicInput from '../components/BasicInput'
+import {addDriver} from '../actions/index'
+import {busesSelector} from '../selectors'
+import {Seq} from 'immutable'
+import BasicInput from '../components/common/BasicInput'
 import startCase from 'lodash/startCase'
-import BasicButton from '../components/BasicButton'
-import BasicField from '../components/BasicField'
+import BasicButton from '../components/common/BasicButton'
+import BasicField from '../components/common/BasicField'
 
 // todo platform
-@connect((state, props) => ({driver: driverSelector(state, props)}), {saveDriver, deleteDriver})
-class EditDriverFormScreen extends React.Component {
+@connect(state => ({buses: busesSelector(state)}), {addDriver})
+class AddDriverFormScreen extends React.Component {
   static navigationOptions = {
-    title: 'Edit driver'
+    title: 'Add driver'
   }
-
-  // this is anti-pattern but in this very case
-  // it doesn't matter - values are only for initial values.
-  // Possible salvation from this issue:
-  // 1. special record 'newValues' in current entity
-  // 2. special record 'currentEditingDriver' or smth in store
 
   state = {
     driver: {
-      firstName: this.props.driver.firstName,
-      middleName: this.props.driver.middleName,
-      lastName: this.props.driver.lastName,
-      dateOfBirth: this.props.driver.dateOfBirth,
-      buses: this.props.driver.buses
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      dateOfBirth: '',
+      buses: new Seq([])
     },
     isDatePickerOn: false
   }
 
   handleSubmit = () => {
-    console.log(this.state.driver)
     if (Object.values(this.state.driver).some(value => !value)) return
     if (!this.state.driver.buses.count()) return
-    this.props.saveDriver(this.state.driver, this.props.navigation.state.params.id)
+    this.props.addDriver(this.state.driver)
     this.props.navigation.goBack()
   }
 
   handleLinkBuses = () => {
-    this.props.navigation.push('LinkBuses', {
+    this.props.navigation.push('BusLink', {
       getBuses: () => this.state.driver.buses,
       toggleBus: this.toggleBus
     })
-  }
-
-  handleDelete = () => {
-    this.props.deleteDriver(this.props.navigation.state.params.id)
-    this.props.navigation.goBack()
   }
 
   toggleBus = (id, val) => {
@@ -141,7 +130,6 @@ class EditDriverFormScreen extends React.Component {
       <SafeAreaView style = {styles.container}>
 
         <View style = {{flex: 1}}/>
-
         <KeyboardAvoidingView
           behavior = 'position'
           enabled
@@ -158,8 +146,7 @@ class EditDriverFormScreen extends React.Component {
           {this.maybeRenderDatePicker()}
 
           <BasicButton onPress = {this.handleLinkBuses} title = 'Link buses'/>
-          <BasicButton onPress = {this.handleSubmit} title = 'Save driver'/>
-          <BasicButton onPress = {this.handleDelete} title = 'Delete driver' destructive/>
+          <BasicButton onPress = {this.handleSubmit} title = 'Add driver'/>
 
         </KeyboardAvoidingView>
 
@@ -168,7 +155,6 @@ class EditDriverFormScreen extends React.Component {
       </SafeAreaView>
     )
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -176,7 +162,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff'
   }
-
 })
 
-export default EditDriverFormScreen
+export default AddDriverFormScreen

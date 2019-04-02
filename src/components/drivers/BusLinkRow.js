@@ -5,9 +5,9 @@ import {
   Switch
 } from 'react-native'
 import PropTypes from 'prop-types'
-import BusCard from './BusCard'
+import BusCard from '../buses/BusCard'
 
-class BusRow extends React.Component {
+class BusLinkRow extends React.Component {
 
   static propTypes = {
     item: PropTypes.object.isRequired,
@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default BusRow
+export default BusLinkRow

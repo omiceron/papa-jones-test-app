@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import {connect} from 'react-redux'
 import {driversSortedSelector, distanceSelector, errorSelector} from '../selectors'
-import FastestBusDriver from '../components/FastestBusDriver'
+import FastestBusDriver from '../components/drivers/FastestBusDriver'
 
 // todo speed
 @connect(state => ({

@@ -5,10 +5,10 @@ import {
   KeyboardAvoidingView
 } from 'react-native'
 import {connect} from 'react-redux'
-import {saveBus, deleteBus} from '../actions'
+import {saveBus, deleteBus} from '../actions/index'
 import {busSelector} from '../selectors'
-import BasicButton from '../components/BasicButton'
-import BasicInput from '../components/BasicInput'
+import BasicButton from '../components/common/BasicButton'
+import BasicInput from '../components/common/BasicInput'
 import startCase from 'lodash/startCase'
 
 @connect((state, props) => ({

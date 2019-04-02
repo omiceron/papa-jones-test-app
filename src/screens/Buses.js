@@ -7,10 +7,10 @@ import {
 } from 'react-native'
 import {busesSelector, busesSortedSelector} from '../selectors'
 import {connect} from 'react-redux'
-import {addBus} from '../actions'
-import BusCard from '../components/BusCard'
-import Separator from '../components/Separator'
-import BasicButton from '../components/BasicButton'
+import {addBus} from '../actions/index'
+import BusCard from '../components/buses/BusCard'
+import Separator from '../components/common/Separator'
+import BasicButton from '../components/common/BasicButton'
 
 @connect(state => ({buses: busesSelector(state)}), {addBus})
 class BusesScreen extends React.Component {
@@ -21,12 +21,12 @@ class BusesScreen extends React.Component {
   renderItem = ({item}) => (
     <BusCard
       bus = {item}
-      onPress = {() => this.props.navigation.navigate('EditBus', {id: item.id})}
+      onPress = {() => this.props.navigation.navigate('BusEditor', {id: item.id})}
     />
   )
 
   handleSubmit = () => {
-    this.props.navigation.push('AddBus')
+    this.props.navigation.push('BusCreator')
   }
 
   render() {

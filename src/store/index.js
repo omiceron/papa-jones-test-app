@@ -1,5 +1,5 @@
 import {createStore, applyMiddleware, compose} from 'redux'
-import rootReducer from '../reducers'
+import rootReducer from '../reducers/index'
 import randomId from '../middlewares/randomId'
 import thunk from 'redux-thunk'
 import distanceCalculator from '../middlewares/distanceCalculator'

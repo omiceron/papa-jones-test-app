@@ -7,9 +7,9 @@ import {
   KeyboardAvoidingView
 } from 'react-native'
 import {connect} from 'react-redux'
-import {findDistance} from '../actions'
-import BasicInput from '../components/BasicInput'
-import BasicButton from '../components/BasicButton'
+import {findDistance} from '../actions/index'
+import BasicInput from '../components/common/BasicInput'
+import BasicButton from '../components/common/BasicButton'
 
 @connect(null, {findDistance})
 class HomeScreen extends React.Component {
@@ -36,7 +36,7 @@ class HomeScreen extends React.Component {
 
   handleSubmit = () => {
     this.props.findDistance(this.state.departure, this.state.arrival)
-    this.props.navigation.push('CalculatedList')
+    this.props.navigation.push('Calculated')
   }
 
   render() {

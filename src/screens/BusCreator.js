@@ -6,9 +6,9 @@ import {
   View
 } from 'react-native'
 import {connect} from 'react-redux'
-import {addBus} from '../actions'
-import BasicButton from '../components/BasicButton'
-import BasicInput from '../components/BasicInput'
+import {addBus} from '../actions/index'
+import BasicButton from '../components/common/BasicButton'
+import BasicInput from '../components/common/BasicInput'
 import startCase from 'lodash/startCase'
 
 @connect(null, {addBus})

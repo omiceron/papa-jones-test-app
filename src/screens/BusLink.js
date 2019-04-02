@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 import {connect} from 'react-redux'
 import {busesSelector} from '../selectors'
-import BusRow from '../components/BusRow'
+import BusLinkRow from '../components/drivers/BusLinkRow'
 
 @connect(state => ({buses: busesSelector(state)}))
 class LinkBusToDriverFormScreen extends React.Component {
@@ -16,7 +16,7 @@ class LinkBusToDriverFormScreen extends React.Component {
 
   renderItem = ({item}) => {
     const {getBuses, toggleBus} = this.props.navigation.state.params
-    return <BusRow item = {item} getBuses = {getBuses} toggleBus = {toggleBus}/>
+    return <BusLinkRow item = {item} getBuses = {getBuses} toggleBus = {toggleBus}/>
   }
 
   render() {

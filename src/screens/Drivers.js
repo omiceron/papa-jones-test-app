@@ -6,10 +6,10 @@ import {
 } from 'react-native'
 import {connect} from 'react-redux'
 import {driversSelector, driversSortedSelector} from '../selectors'
-import {addDriver, deleteDriver} from '../actions'
-import BasicButton from '../components/BasicButton'
-import AllBusesDriver from '../components/AllBusesDriver'
-import Separator from '../components/Separator'
+import {addDriver, deleteDriver} from '../actions/index'
+import BasicButton from '../components/common/BasicButton'
+import AllBusesDriver from '../components/drivers/AllBusesDriver'
+import Separator from '../components/common/Separator'
 
 @connect(state => ({drivers: driversSelector(state)}), {addDriver, deleteDriver})
 class DriversScreen extends React.Component {
@@ -20,11 +20,11 @@ class DriversScreen extends React.Component {
   renderItem = ({item}) => <AllBusesDriver
     showDate
     driver = {item}
-    onPress = {() => this.props.navigation.navigate('EditDriver', {id: item.id})}
+    onPress = {() => this.props.navigation.navigate('DriverEditor', {id: item.id})}
   />
 
   handleSubmit = () => {
-    this.props.navigation.push('AddDriver')
+    this.props.navigation.push('DriverCreator')
   }
 
   render() {

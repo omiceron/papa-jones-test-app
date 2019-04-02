@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native'
 import PropTypes from 'prop-types'
-import Colors from '../constants/Colors'
+import Colors from '../../constants/colors'
 
 class BasicButton extends Component {
   static propTypes = {

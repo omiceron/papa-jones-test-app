@@ -5,7 +5,7 @@ import {
   View
 } from 'react-native'
 import PropTypes from 'prop-types'
-import SegmentedCard from './SegmentedCard'
+import SegmentedCard from '../common/SegmentedCard'
 
 class DriverCard extends Component {
   static propTypes = {

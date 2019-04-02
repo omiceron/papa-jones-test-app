@@ -21,14 +21,6 @@ export const driversSortedSelector = createSelector(driversMapSelector, busesMap
     .reverse()
     .valueSeq()
     .toArray()
-
-  // .map(driver => ({
-  //   ...driver.toObject(),
-  //   buses: driver.buses
-  //     .map(id => buses.get(id))
-  //     .reduce((p, c) => (Number(p.speed) < Number(c.speed)) ? c : p)
-  //     .toObject()
-  // }))
 )
 
 export const fastestBusOfDriverSelector = createSelector(busesMapSelector, driverBusesSelector,
