@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
   },
   leftContainer: {
     marginLeft: 10,
-    width: 50,
-    alignItems: 'flex-end',
+    width: 100,
+    // alignItems: 'flex-end',
     justifyContent: 'center'
   }
 })

@@ -19,6 +19,11 @@ class EditBusFormScreen extends React.Component {
     title: 'Edit bus'
   }
 
+  // this is anti-pattern but in this very case
+  // it doesn't matter - values are only for initial values.
+  // Possible salvation from this issue:
+  // 1. special record 'newValues' in current entity
+  // 2. special record 'currentEditingBus' or smth in store
   state = {
     model: this.props.bus.model,
     year: this.props.bus.year,

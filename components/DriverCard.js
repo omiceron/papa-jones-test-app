@@ -12,36 +12,33 @@ class DriverCard extends Component {
     driver: PropTypes.shape({
       firstName: PropTypes.string.isRequired,
       middleName: PropTypes.string.isRequired,
-      lastName: PropTypes.string.isRequired,
-      buses: PropTypes.object.isRequired
-      // dateOfBirth: PropTypes.object.isRequired,
+      lastName: PropTypes.string.isRequired, // buses: PropTypes.object.isRequired
+      dateOfBirth: PropTypes.string.isRequired,
     }).isRequired,
-    onPress: PropTypes.func
+    onPress: PropTypes.func,
+    showDate: PropTypes.any
+  }
+
+  maybeRenderDate = () => {
+    return this.props.showDate ? <View style = {styles.textView}>
+      <Text style = {styles.text}>
+        {this.props.driver.dateOfBirth}
+      </Text>
+    </View> : null
   }
 
   render() {
     const {onPress, LeftComponent} = this.props
     const {firstName, middleName, lastName, buses, dateOfBirth} = this.props.driver
-    const date = dateOfBirth//.toDateString()
 
     return <SegmentedCard onPress = {onPress} LeftComponent = {LeftComponent}>
       <View style = {styles.textView}>
-        <Text>
+        <Text style = {styles.text}>
           {firstName} {middleName} {lastName}
         </Text>
       </View>
 
-      <View style = {styles.textView}>
-        <Text>
-          {date}
-        </Text>
-      </View>
-
-      <View style = {styles.textView}>
-        <Text>
-          {buses}
-        </Text>
-      </View>
+      {this.maybeRenderDate()}
 
     </SegmentedCard>
   }
@@ -50,8 +47,11 @@ class DriverCard extends Component {
 const styles = StyleSheet.create({
   textView: {
     flex: 1,
-    justifyContent: 'center',
-    padding: 10
+    justifyContent: 'center'
+  },
+  text: {
+    fontSize: 17,
+    color: 'rgba(96,100,109, 1)'
   }
 })
 

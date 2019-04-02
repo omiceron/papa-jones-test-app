@@ -27,7 +27,7 @@ class BasicCard extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 60,
+    minHeight: 60,
     flex: 1,
     display: 'flex',
     flexDirection: 'row',

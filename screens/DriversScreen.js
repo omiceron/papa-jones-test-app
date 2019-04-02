@@ -7,8 +7,9 @@ import {
 import {connect} from 'react-redux'
 import {driversSelector, driversSortedSelector} from '../selectors'
 import {addDriver, deleteDriver} from '../actions'
-import DriverCard from '../components/DriverCard'
 import BasicButton from '../components/BasicButton'
+import AllBusesDriver from '../components/AllBusesDriver'
+import Separator from '../components/Separator'
 
 @connect(state => ({drivers: driversSelector(state)}), {addDriver, deleteDriver})
 class DriversScreen extends React.Component {
@@ -16,7 +17,8 @@ class DriversScreen extends React.Component {
     title: 'Drivers'
   }
 
-  renderItem = ({item}) => <DriverCard
+  renderItem = ({item}) => <AllBusesDriver
+    showDate
     driver = {item}
     onPress = {() => this.props.deleteDriver(item.id)}
   />
@@ -30,7 +32,7 @@ class DriversScreen extends React.Component {
       <SafeAreaView style = {styles.container}>
         <FlatList
           // contentContainerStyle = {}
-          // ItemSeparatorComponent = {}
+          ItemSeparatorComponent = {Separator}
           data = {this.props.drivers}
           renderItem = {this.renderItem}
           keyExtractor = {({id}) => id}

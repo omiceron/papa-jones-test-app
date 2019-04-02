@@ -25,19 +25,19 @@ class BusCard extends Component {
 
         <View style = {styles.textView}>
           <Text style = {styles.text}>
-            {model}
+            Model: {model}
           </Text>
         </View>
 
         <View style = {styles.textView}>
           <Text style = {styles.text}>
-            {year}
+            Year: {year}
           </Text>
         </View>
 
       <View style = {styles.textView}>
         <Text style = {styles.text}>
-          {speed} km/h
+          Speed: {speed} km/h
         </Text>
       </View>
 

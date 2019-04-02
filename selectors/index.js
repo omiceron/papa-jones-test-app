@@ -37,12 +37,15 @@ export const fastestBusOfDriverSelector = createSelector(busesMapSelector, drive
     .maxBy(bus => Number(bus.speed))
 )
 
-export const busesSortedSelector = createSelector(busesMapSelector,
-  buses => buses.sortBy(bus => Number(bus.speed)).reverse().valueSeq().toArray()
+export const allBusesOfDriverSelector = createSelector(busesMapSelector, driverBusesSelector,
+  (buses, driverBuses) => buses
+    .filter(bus => driverBuses.includes(bus.id))
+    .valueSeq()
+    .toArray()
 )
 
-export const driverSelector = createSelector(driversMapSelector, idSelector,
-  (drivers, id) => drivers.get(id)
+export const busesSortedSelector = createSelector(busesMapSelector,
+  buses => buses.sortBy(bus => Number(bus.speed)).reverse().valueSeq().toArray()
 )
 
 export const busSelector = createSelector(busesMapSelector, idFromNavigationSelector,
