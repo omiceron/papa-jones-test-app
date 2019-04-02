@@ -11,5 +11,6 @@ export default {
   warningText: '#666804',
   noticeBackground: tintColor,
   noticeText: '#fff',
-  destructiveColor: '#f03333'
+  destructiveColor: '#f03333',
+  placeholderColor: '#C0C0C0',
 }

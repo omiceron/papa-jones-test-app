@@ -12,54 +12,46 @@ import LinkBusToDriverFormScreen from '../screens/LinkBusToDriverScreen'
 import CalculatedListScreen from '../screens/CalculatedListScreen'
 import EditBusFormScreen from '../screens/EditBusFormScreen'
 
+const renderTabBarIcon = (name) => ({tintColor, focused}) =>
+  <TabBarIcon
+    name = {Platform.OS === 'ios' ? `ios-${name}` : `md-${name}`}
+    focused = {focused}
+  />
+
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   CalculatedList: CalculatedListScreen
+}, {
+  navigationOptions: {
+    tabBarLabel: 'Navigate',
+    tabBarIcon: renderTabBarIcon('navigate')
+  }
 })
-
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Navigate',
-  tabBarIcon: ({focused}) => (
-    <TabBarIcon
-      focused = {focused}
-      name = {Platform.OS === 'ios' ? 'ios-navigate' : 'md-navigate'}
-    />
-  )
-}
 
 const BusesStack = createStackNavigator({
   Buses: BusesScreen,
   AddBus: AddBusFormScreen,
   EditBus: EditBusFormScreen
+}, {
+  navigationOptions: {
+    tabBarLabel: 'Buses',
+    tabBarIcon: renderTabBarIcon('bus')
+  }
 })
-
-BusesStack.navigationOptions = {
-  tabBarLabel: 'Buses',
-  tabBarIcon: ({focused}) => (
-    <TabBarIcon
-      focused = {focused}
-      name = {Platform.OS === 'ios' ? 'ios-bus' : 'md-bus'}
-    />
-  )
-}
 
 const DriversStack = createStackNavigator({
   Drivers: DriversScreen,
   AddDriver: AddDriverFormScreen,
   LinkBuses: LinkBusToDriverFormScreen
+}, {
+  navigationOptions: {
+    tabBarLabel: 'Drivers',
+    tabBarIcon: renderTabBarIcon('people')
+  }
 })
 
-DriversStack.navigationOptions = {
-  tabBarLabel: 'Drivers',
-  tabBarIcon: ({focused}) => (
-    <TabBarIcon
-      focused = {focused}
-      name = {Platform.OS === 'ios' ? 'ios-people' : 'md-people'}
-    />
-  )
-}
 export default createBottomTabNavigator({
   HomeStack,
   BusesStack,
-  DriversStack,
+  DriversStack
 })

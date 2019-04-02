@@ -31,9 +31,6 @@ export default (buses = new BusesReducerRecord(), action) => {
     case BUS + SAVE:
       return buses.mergeIn(['entities', payload.id], payload)
 
-    case FIND_DISTANCE:
-      console.log(distance)
-      return buses
   }
   return buses
 }

@@ -1,17 +1,14 @@
 import React from 'react'
 import {
-  TextInput,
-  Platform,
   StyleSheet,
-  TouchableOpacity,
-  View,
-  Text,
   SafeAreaView,
   KeyboardAvoidingView
 } from 'react-native'
-import colors from '../constants/Colors'
 import {connect} from 'react-redux'
 import {addBus} from '../actions'
+import BasicButton from '../components/BasicButton'
+import BasicInput from '../components/BasicInput'
+import startCase from 'lodash/startCase'
 
 @connect(null, {addBus})
 class AddBusFormScreen extends React.Component {
@@ -19,12 +16,15 @@ class AddBusFormScreen extends React.Component {
     title: 'Add bus'
   }
 
-  state = {
-    model: '',
-    year: null,
-    speed: null
+  componentWillUnmount() {
+    // this.props.maybeDeleteBus
   }
 
+  state = {
+    model: '',
+    year: '',
+    speed: ''
+  }
 
   handleSubmit = () => {
     if (Object.values(this.state).some(value => !value)) return
@@ -34,55 +34,42 @@ class AddBusFormScreen extends React.Component {
 
   changeValue = (key) => (value) => this.setState({[key]: value})
 
+  refs = {}
+  inputs = ['model', 'year', 'speed']
+
+  setRef = (key) => (ref) => this.refs = {...this.refs, [key]: ref}
+
+  renderInputs = () => this.inputs.map((input, i, a) => {
+    const nextInput = a[i + 1]
+
+    const onSubmitEditing = () =>
+      nextInput ? this.refs[nextInput].focus() : this.handleSubmit()
+
+    const returnKeyType = nextInput ? 'next' : 'done'
+
+    return <BasicInput
+      key = {input}
+      onChangeText = {this.changeValue(input)}
+      value = {this.state[input]}
+      placeholder = {startCase(input)}
+      onSubmitEditing = {onSubmitEditing}
+      setRef = {this.setRef(input)}
+      returnKeyType = {returnKeyType}
+      maxLength = {input === 'year' ? 4 : undefined}
+    />
+  })
+
   render() {
     return (
       <SafeAreaView style = {styles.container}>
         <KeyboardAvoidingView
           behavior = 'position'
           enabled
-          style = {{height: 500, justifyContent: 'center'}}
+          style = {{height: 600, justifyContent: 'center'}}
         >
+          {this.renderInputs()}
 
-          <View style = {styles.field}>
-            <TextInput
-              placeholder = 'model'
-              style = {[styles.getStartedText]}
-              value = {this.state.model}
-              onChangeText = {this.changeValue('model')}
-              returnKeyType = 'next'
-              clearButtonMode = 'while-editing'
-            />
-          </View>
-
-          <View style = {styles.field}>
-            <TextInput
-              placeholder = 'speed'
-              style = {[styles.getStartedText]}
-              value = {this.state.speed}
-              onChangeText = {this.changeValue('speed')}
-              returnKeyType = 'next'
-              clearButtonMode = 'while-editing'
-            />
-          </View>
-
-          <View style = {styles.field}>
-            <TextInput
-              placeholder = 'year'
-              style = {[styles.getStartedText]}
-              value = {this.state.year}
-              onChangeText = {this.changeValue('year')}
-              returnKeyType = 'done'
-              clearButtonMode = 'while-editing'
-            />
-
-          </View>
-
-
-          <TouchableOpacity onPress = {this.handleSubmit}>
-            <View style = {[styles.field, styles.button]}>
-              <Text style = {[styles.getStartedText, {color: 'white'}]}>Add bus</Text>
-            </View>
-          </TouchableOpacity>
+          <BasicButton onPress = {this.handleSubmit} title = 'Add bus'/>
 
         </KeyboardAvoidingView>
 
@@ -98,36 +85,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center'
   },
-  itemContainer: {
-    height: 60,
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    margin: 20,
-    backgroundColor: 'rgba(127,127,127, 0.1)'
-  },
-  itemText: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 10
-  },
-  field: {
-    height: 45,
-    marginHorizontal: 50,
-    marginBottom: 20,
-    borderRadius: 10,
-    backgroundColor: 'rgba(127,127,127, 0.1)',
-    justifyContent: 'center'
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: colors.tintColor
-  },
-  getStartedText: {
-    margin: 10,
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)'
-  }
 })
 
 export default AddBusFormScreen

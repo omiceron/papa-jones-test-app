@@ -1,4 +1,5 @@
 import {Location} from 'expo'
+import {END, FAILED, START, SUCCESS} from '../constants/actions'
 
 const getHaversineDistance = (firstLocation, secondLocation) => {
   const earthRadius = 6371
@@ -18,18 +19,32 @@ const getHaversineDistance = (firstLocation, secondLocation) => {
 }
 
 export default store => next => async action => {
-  if (!action.findDistance) return next(action)
+  const {findDistance, type, ...rest} = action
+  if (!findDistance) return next(action)
 
-  const [[from], [to]] = await
-    Promise.all([action.from, action.to].map(Location.geocodeAsync))
+  next({...rest, type: type + START})
 
-  if (!from || !to) return next({...action, distance: null})
+  try {
+    const [[from], [to]] = await
+      Promise.all([action.payload.from, action.payload.to].map(Location.geocodeAsync))
 
-  const distance = getHaversineDistance(from, to)
+    if (!from || !to) return next({...rest, type: type + END + FAILED, error: 'no coords'})
 
-  next({
-    ...action,
-    distance
-  })
+    const distance = getHaversineDistance(from, to)
+
+    next({
+      ...rest,
+      type: type + END + SUCCESS,
+      distance
+    })
+
+  } catch (error) {
+    next({
+      ...rest,
+      type: type + END + FAILED,
+      error
+    })
+    console.warn(error)
+  }
 
 }

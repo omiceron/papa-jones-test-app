@@ -23,7 +23,7 @@ class DriverCard extends Component {
   render() {
     const {onPress} = this.props
     const {firstName, middleName, lastName, buses, dateOfBirth} = this.props.driver
-    const date = dateOfBirth.toDateString()
+    const date = dateOfBirth//.toDateString()
 
     return <SegmentedCard onPress = {onPress} LeftComponent = {() => <FastestBus buses = {buses}/>}>
       <View style = {styles.textView}>

@@ -32,10 +32,8 @@ export function updateBus(key, value, id) {
 export function findDistance(from, to) {
   return {
     type: FIND_DISTANCE,
-    from,
-    to,
-    findDistance: true
-    // payload: {id}
+    findDistance: true,
+    payload: {from, to}
   }
 }
 
@@ -50,6 +48,6 @@ export function addDriver(driver) {
 export function deleteDriver(id) {
   return {
     type: DRIVER + DELETE,
-    payload: {id},
+    payload: {id}
   }
 }
