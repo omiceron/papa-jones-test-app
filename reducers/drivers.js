@@ -1,5 +1,5 @@
 import {Record, OrderedMap, Seq} from 'immutable'
-import {ADD, BUS, DELETE, DRIVER} from '../constants/actions'
+import {ADD, BUS, DELETE, DRIVER, SAVE} from '../constants/actions'
 
 export const DriverRecord = Record({
   id: null,
@@ -26,6 +26,9 @@ export default (drivers = new DriversReducerRecord(), action) => {
 
     case DRIVER + DELETE:
       return drivers.deleteIn(['entities', payload.id])
+
+    case DRIVER + SAVE:
+      return drivers.mergeIn(['entities', payload.id], payload)
 
     case BUS + DELETE:
       return drivers.update('entities', (entities) => {

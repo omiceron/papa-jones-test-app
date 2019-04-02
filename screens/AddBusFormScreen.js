@@ -2,7 +2,8 @@ import React from 'react'
 import {
   StyleSheet,
   SafeAreaView,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  View
 } from 'react-native'
 import {connect} from 'react-redux'
 import {addBus} from '../actions'
@@ -65,14 +66,13 @@ class AddBusFormScreen extends React.Component {
         <KeyboardAvoidingView
           behavior = 'position'
           enabled
-          style = {{height: 600, justifyContent: 'center'}}
+          style = {{height: 400, justifyContent: 'center'}}
         >
           {this.renderInputs()}
 
           <BasicButton onPress = {this.handleSubmit} title = 'Add bus'/>
 
         </KeyboardAvoidingView>
-
       </SafeAreaView>
     )
   }

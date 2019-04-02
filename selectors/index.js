@@ -51,3 +51,7 @@ export const busesSortedSelector = createSelector(busesMapSelector,
 export const busSelector = createSelector(busesMapSelector, idFromNavigationSelector,
   (buses, id) => buses.get(id)
 )
+
+export const driverSelector = createSelector(driversMapSelector, idFromNavigationSelector,
+  (drivers, id) => drivers.get(id)
+)

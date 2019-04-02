@@ -11,6 +11,7 @@ import AddDriverFormScreen from '../screens/AddDriverFormScreen'
 import LinkBusToDriverFormScreen from '../screens/LinkBusToDriverScreen'
 import CalculatedListScreen from '../screens/CalculatedListScreen'
 import EditBusFormScreen from '../screens/EditBusFormScreen'
+import EditDriverFormScreen from '../screens/EditDriverFormScreen'
 
 const renderTabBarIcon = (name) => ({tintColor, focused}) =>
   <TabBarIcon
@@ -42,6 +43,7 @@ const BusesStack = createStackNavigator({
 const DriversStack = createStackNavigator({
   Drivers: DriversScreen,
   AddDriver: AddDriverFormScreen,
+  EditDriver: EditDriverFormScreen,
   LinkBuses: LinkBusToDriverFormScreen
 }, {
   navigationOptions: {

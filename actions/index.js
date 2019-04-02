@@ -51,3 +51,10 @@ export function deleteDriver(id) {
     payload: {id}
   }
 }
+
+export function saveDriver(params, id) {
+  return {
+    type: DRIVER + SAVE,
+    payload: {...params, id}
+  }
+}

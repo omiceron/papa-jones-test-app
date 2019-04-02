@@ -81,7 +81,7 @@ class EditBusFormScreen extends React.Component {
         <KeyboardAvoidingView
           behavior = 'position'
           enabled
-          style = {{height: 600, justifyContent: 'center'}}
+          style = {{height: 400, justifyContent: 'center'}}
         >
           {this.renderInputs()}
 

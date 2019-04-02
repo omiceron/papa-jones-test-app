@@ -6,7 +6,8 @@ import {
   KeyboardAvoidingView,
   DatePickerIOS,
   LayoutAnimation,
-  Keyboard
+  Keyboard,
+  ScrollView
 } from 'react-native'
 import {connect} from 'react-redux'
 import {addDriver} from '../actions'
@@ -37,7 +38,7 @@ class AddDriverFormScreen extends React.Component {
 
   handleSubmit = () => {
     if (Object.values(this.state.driver).some(value => !value)) return
-    if (!this.state.driver.buses.size) return
+    if (!this.state.driver.buses.count()) return
     this.props.addDriver(this.state.driver)
     this.props.navigation.goBack()
   }
@@ -129,7 +130,6 @@ class AddDriverFormScreen extends React.Component {
       <SafeAreaView style = {styles.container}>
 
         <View style = {{flex: 1}}/>
-
         <KeyboardAvoidingView
           behavior = 'position'
           enabled
