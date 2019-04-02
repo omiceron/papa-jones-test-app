@@ -10,6 +10,7 @@ export const BusRecord = Record({
 
 export const BusesReducerRecord = Record({
   entities: new OrderedMap({}),
+  tempEntity: new BusRecord(),
   loading: false,
   loaded: false,
   error: null
@@ -26,7 +27,7 @@ export default (buses = new BusesReducerRecord(), action) => {
       return buses.deleteIn(['entities', payload.id])
 
     case BUS + EDIT:
-      return buses.updateIn(['entities', payload.id, payload.key], () => payload.value)
+      return buses.updateIn(['tempEntity', payload.key], () => payload.value)
 
     case BUS + SAVE:
       return buses.mergeIn(['entities', payload.id], payload)

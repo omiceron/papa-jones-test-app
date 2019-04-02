@@ -21,7 +21,7 @@ class BusesScreen extends React.Component {
   renderItem = ({item}) => (
     <BusCard
       bus = {item}
-      onPress = {() => this.props.navigation.navigate('BusEditor', {id: item.id})}
+      onPress = {() => this.props.navigation.navigate('BusEditor', {bus: item})}
     />
   )
 
