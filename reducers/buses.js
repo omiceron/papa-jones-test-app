@@ -1,14 +1,14 @@
 import {Record, OrderedMap} from 'immutable'
 import {ADD, BUS, DELETE, EDIT, FIND_DISTANCE, SAVE} from '../constants/actions'
 
-const BusRecord = Record({
+export const BusRecord = Record({
   id: null,
   model: null,
   speed: null,
   year: null
 })
 
-const BusesReducerRecord = Record({
+export const BusesReducerRecord = Record({
   entities: new OrderedMap({}),
   loading: false,
   loaded: false,

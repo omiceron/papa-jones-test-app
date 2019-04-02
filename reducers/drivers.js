@@ -10,7 +10,7 @@ export const DriverRecord = Record({
   buses: new Seq([])
 })
 
-const DriversReducerRecord = Record({
+export const DriversReducerRecord = Record({
   entities: new OrderedMap({}),
   loading: false,
   loaded: false,

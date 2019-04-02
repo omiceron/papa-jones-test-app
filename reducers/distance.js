@@ -1,7 +1,7 @@
 import {ADD, BUS, DELETE, END, FAILED, FIND_DISTANCE, START, SUCCESS} from '../constants/actions'
 import {Record} from 'immutable'
 
-const DistanceReducerRecord = Record({
+export const DistanceReducerRecord = Record({
   distance: null,
   from: null,
   to: null,
