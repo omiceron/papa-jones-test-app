@@ -1,6 +1,4 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {addBus} from '../actions/index'
 import BusEditorCore from '../components/buses/BusEditorCore'
 
 class AddBusFormScreen extends React.Component {
@@ -9,7 +7,7 @@ class AddBusFormScreen extends React.Component {
   }
 
   render() {
-    return <BusEditorCore bus = {this.props.bus}/>
+    return <BusEditorCore />
   }
 }
 

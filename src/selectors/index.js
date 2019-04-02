@@ -2,6 +2,7 @@ import {createSelector} from 'reselect'
 
 export const driversMapSelector = state => state.drivers.get('entities')
 export const busesMapSelector = state => state.buses.get('entities')
+export const tempBusMapSelector = state => state.buses.get('tempEntity')
 export const distanceSelector = state => state.distance.get('distance')
 export const errorSelector = state => state.distance.get('error')
 

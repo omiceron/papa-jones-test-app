@@ -2,31 +2,42 @@ import React from 'react'
 import {
   StyleSheet,
   SafeAreaView,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  AsyncStorage
 } from 'react-native'
 import {connect} from 'react-redux'
-import {saveBus, addBus, deleteBus} from '../../actions/index'
-import {busSelector} from '../../selectors'
+import {saveBus, addBus, deleteBus, updateBus, updateBusForm, clearBusForm} from '../../actions/index'
+import {busSelector, tempBusMapSelector} from '../../selectors'
 import BasicButton from '../../components/common/BasicButton'
 import BasicInput from '../../components/common/BasicInput'
 import startCase from 'lodash/startCase'
-import { withNavigation } from 'react-navigation'
+import {withNavigation} from 'react-navigation'
 
-@connect(null, {saveBus, deleteBus, addBus})
+@connect((state) => ({tempBus: tempBusMapSelector(state)}), {
+  updateBusForm,
+  saveBus,
+  deleteBus,
+  addBus,
+  updateBus,
+  clearBusForm
+})
 @withNavigation
 class BusEditorCore extends React.Component {
 
-  state = {
-    model: this.props.bus ? this.props.bus.model : '',
-    year: this.props.bus ? this.props.bus.year : '',
-    speed: this.props.bus ? this.props.bus.speed : ''
+  componentDidMount() {
+    // AsyncStorage.clear()
+    this.props.updateBusForm(this.props.id)
+  }
+
+  componentWillUnmount() {
+    this.props.clearBusForm()
   }
 
   handleSubmit = () => {
-    if (Object.values(this.state).some(value => !value)) return
+    // if (Object.values(this.props.tempBus).some(value => !value)) return
     this.props.id
-      ? this.props.saveBus(this.state, this.props.id)
-      : this.props.addBus(this.state)
+      ? this.props.saveBus(this.props.id)
+      : this.props.addBus()
     this.props.navigation.goBack()
   }
 
@@ -35,7 +46,7 @@ class BusEditorCore extends React.Component {
     this.props.navigation.goBack()
   }
 
-  changeValue = (key) => (value) => this.setState({[key]: value})
+  changeValue = (key) => (value) => this.props.updateBus(key, value)
 
   refs = {}
   inputs = ['model', 'year', 'speed']
@@ -53,7 +64,7 @@ class BusEditorCore extends React.Component {
     return <BasicInput
       key = {input}
       onChangeText = {this.changeValue(input)}
-      value = {this.state[input]}
+      value = {this.props.tempBus[input]}
       // value = {this.state[input] === null ? this.props.bus[input] : this.state[input]}
       placeholder = {startCase(input)}
       onSubmitEditing = {onSubmitEditing}

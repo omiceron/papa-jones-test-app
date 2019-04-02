@@ -6,7 +6,7 @@ class BasicInput extends Component {
   static propTypes = {
     setRef: PropTypes.func,
     onChangeText: PropTypes.func.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
     returnKeyType: PropTypes.string,
     clearButtonMode: PropTypes.string,
     placeholder: PropTypes.string,
