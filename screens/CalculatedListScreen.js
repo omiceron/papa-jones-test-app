@@ -3,42 +3,32 @@ import {
   SafeAreaView,
   StyleSheet,
   FlatList,
-  Text,
-  View
+  Text
 } from 'react-native'
 import {connect} from 'react-redux'
-import {driversSortedSelector} from '../selectors'
-import FastestBus from '../components/FastestBus'
+import {driversSortedSelector, distanceSelector, errorSelector} from '../selectors'
+import FastestBusDriver from '../components/FastestBusDriver'
 
 // todo speed
-@connect(state => ({drivers: driversSortedSelector(state)}))
+@connect(state => ({
+  drivers: driversSortedSelector(state),
+  distance: distanceSelector(state),
+  error: errorSelector(state)
+}))
 class CalculatedListScreen extends React.Component {
   static navigationOptions = {
     title: 'Calculated'
   }
 
-  renderItem = ({item}) => {
-    return <View style = {styles.itemContainer}>
-
-      <View style = {styles.itemText}>
-        <Text>
-          {item.firstName} {item.middleName} {item.lastName}
-        </Text>
-      </View>
-
-      <FastestBus distance = {this.props.navigation.state.params.distance} buses = {item.buses}/>
-
-    </View>
-  }
+  renderItem = ({item}) => <FastestBusDriver driver = {item}/>
 
   render() {
+    if (this.props.error) return <Text>
+      {this.props.error}
+    </Text>
+
     return (
       <SafeAreaView style = {styles.container}>
-        <View>
-          <Text>
-            {String(Math.round(this.props.navigation.state.params.distance))}
-          </Text>
-        </View>
         <FlatList
           data = {this.props.drivers}
           renderItem = {this.renderItem}

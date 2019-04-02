@@ -2,9 +2,12 @@ import {createSelector} from 'reselect'
 
 export const driversMapSelector = state => state.drivers.get('entities')
 export const busesMapSelector = state => state.buses.get('entities')
+export const distanceSelector = state => state.distance.get('distance')
+export const errorSelector = state => state.distance.get('error')
+
 export const idSelector = (_, props) => props.id
 export const idFromNavigationSelector = (_, props) => props.navigation.state.params.id
-export const driverBusesSelector = (_, props) => props.buses
+export const driverBusesSelector = (_, props) => props.driver.buses
 
 export const driversSelector = createSelector(driversMapSelector, drivers => drivers.valueSeq().toArray())
 export const busesSelector = createSelector(busesMapSelector, buses => buses.valueSeq().toArray())

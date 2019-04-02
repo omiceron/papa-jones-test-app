@@ -2,10 +2,9 @@ import React, {Component} from 'react'
 import {
   StyleSheet,
   Text,
-  View,
+  View
 } from 'react-native'
 import PropTypes from 'prop-types'
-import FastestBus from '../components/FastestBus'
 import SegmentedCard from './SegmentedCard'
 
 class DriverCard extends Component {
@@ -14,18 +13,18 @@ class DriverCard extends Component {
       firstName: PropTypes.string.isRequired,
       middleName: PropTypes.string.isRequired,
       lastName: PropTypes.string.isRequired,
-      buses: PropTypes.object.isRequired,
+      buses: PropTypes.object.isRequired
       // dateOfBirth: PropTypes.object.isRequired,
-      onPress: PropTypes.func
-    })
+    }).isRequired,
+    onPress: PropTypes.func
   }
 
   render() {
-    const {onPress} = this.props
+    const {onPress, LeftComponent} = this.props
     const {firstName, middleName, lastName, buses, dateOfBirth} = this.props.driver
     const date = dateOfBirth//.toDateString()
 
-    return <SegmentedCard onPress = {onPress} LeftComponent = {() => <FastestBus buses = {buses}/>}>
+    return <SegmentedCard onPress = {onPress} LeftComponent = {LeftComponent}>
       <View style = {styles.textView}>
         <Text>
           {firstName} {middleName} {lastName}

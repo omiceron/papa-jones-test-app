@@ -36,7 +36,7 @@ class HomeScreen extends React.Component {
 
   handleSubmit = () => {
     this.props.findDistance(this.state.departure, this.state.arrival)
-    // this.props.navigation.push('CalculatedList', {distance})
+    this.props.navigation.push('CalculatedList')
   }
 
   render() {

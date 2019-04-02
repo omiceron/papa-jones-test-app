@@ -30,11 +30,11 @@ export function updateBus(key, value, id) {
 }
 
 export function findDistance(from, to) {
-  return {
+  return (dispatch) => dispatch({
     type: FIND_DISTANCE,
     findDistance: true,
     payload: {from, to}
-  }
+  })
 }
 
 export function addDriver(driver) {

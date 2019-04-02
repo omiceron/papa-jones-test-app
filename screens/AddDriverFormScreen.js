@@ -37,6 +37,7 @@ class AddDriverFormScreen extends React.Component {
 
   handleSubmit = () => {
     if (Object.values(this.state.driver).some(value => !value)) return
+    if (!this.state.driver.buses.size) return
     this.props.addDriver(this.state.driver)
     this.props.navigation.goBack()
   }
