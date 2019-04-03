@@ -12,6 +12,7 @@ import {
   DatePickerAndroid,
   ScrollView
 } from 'react-native'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 import {connect} from 'react-redux'
 import {tempDriverMapSelector} from '../../selectors'
 import {saveDriver, deleteDriver, updateDriver, updateDriverForm, clearDriverForm, addDriver} from '../../actions/index'
@@ -153,13 +154,11 @@ class DriverEditorCore extends React.Component {
     return (
       <SafeAreaView style = {styles.container}>
 
-        <View style = {{flex: 1}}/>
-
-        <KeyboardAvoidingView
-          behavior = 'position'
-          enabled
-          style = {{height: 600, justifyContent: 'center'}}
+        <KeyboardAwareScrollView
+          // style = {{flex: 1}}
+          contentContainerStyle = {{flex: 1, justifyContent: 'center'}}
         >
+
           {this.renderInputs()}
 
           <BasicField
@@ -175,9 +174,7 @@ class DriverEditorCore extends React.Component {
 
           {this.maybeRenderDeleteButton()}
 
-        </KeyboardAvoidingView>
-
-        <View style = {{flex: 1}}/>
+        </KeyboardAwareScrollView>
 
       </SafeAreaView>
     )
