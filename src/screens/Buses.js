@@ -26,7 +26,7 @@ class BusesScreen extends React.Component {
   )
 
   handleSubmit = () => {
-    this.props.navigation.push('BusCreator')
+    this.props.navigation.push('BusEditor')
   }
 
   render() {

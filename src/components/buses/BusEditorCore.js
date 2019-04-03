@@ -3,15 +3,16 @@ import {
   StyleSheet,
   SafeAreaView,
   KeyboardAvoidingView,
-  AsyncStorage
+  Alert
 } from 'react-native'
 import {connect} from 'react-redux'
 import {saveBus, addBus, deleteBus, updateBus, updateBusForm, clearBusForm} from '../../actions/index'
-import {busSelector, tempBusMapSelector} from '../../selectors'
+import {tempBusMapSelector} from '../../selectors'
 import BasicButton from '../../components/common/BasicButton'
 import BasicInput from '../../components/common/BasicInput'
 import startCase from 'lodash/startCase'
 import {withNavigation} from 'react-navigation'
+import PropTypes from 'prop-types'
 
 @connect((state) => ({tempBus: tempBusMapSelector(state)}), {
   updateBusForm,
@@ -23,9 +24,11 @@ import {withNavigation} from 'react-navigation'
 })
 @withNavigation
 class BusEditorCore extends React.Component {
+  static propTypes = {
+    id: PropTypes.string
+  }
 
   componentDidMount() {
-    // AsyncStorage.clear()
     this.props.updateBusForm(this.props.id)
   }
 
@@ -34,7 +37,10 @@ class BusEditorCore extends React.Component {
   }
 
   handleSubmit = () => {
-    // if (Object.values(this.props.tempBus).some(value => !value)) return
+    if (this.props.tempBus.toSeq().some((value, key) => !value && key !== 'id')) {
+      Alert.alert('All fields are required!')
+      return
+    }
     this.props.id
       ? this.props.saveBus(this.props.id)
       : this.props.addBus()
@@ -65,7 +71,6 @@ class BusEditorCore extends React.Component {
       key = {input}
       onChangeText = {this.changeValue(input)}
       value = {this.props.tempBus[input]}
-      // value = {this.state[input] === null ? this.props.bus[input] : this.state[input]}
       placeholder = {startCase(input)}
       onSubmitEditing = {onSubmitEditing}
       setRef = {this.setRef(input)}

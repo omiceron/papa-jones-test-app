@@ -39,11 +39,8 @@ export function findDistance(from, to) {
 
 export function addBus() {
   return (dispatch, getState) => {
-    // const payload = getState().buses.tempEntity.toObject()
-
     dispatch({
       type: BUS + ADD,
-      // payload,
       generateId: true
     })
   }

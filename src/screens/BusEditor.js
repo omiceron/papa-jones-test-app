@@ -3,15 +3,16 @@ import BusEditorCore from '../components/buses/BusEditorCore'
 
 class EditBusFormScreen extends React.Component {
   static navigationOptions = ({navigation}) => {
-    const {model, year} = navigation.state.params.bus
+    const {params} = navigation.state
+
     return {
-      title: `Edit ${model} ${year}`
+      title: params && params.bus ? `Edit ${params.bus.model} ${params.bus.year}` : 'Add bus'
     }
   }
 
   render() {
-    const {id} = this.props.navigation.state.params.bus
-    return <BusEditorCore id = {id}/>
+    const {params} = this.props.navigation.state
+    return <BusEditorCore id = {params && params.bus && params.bus.id}/>
   }
 
 }
