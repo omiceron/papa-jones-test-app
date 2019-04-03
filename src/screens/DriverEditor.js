@@ -75,6 +75,8 @@ class EditDriverFormScreen extends React.Component {
       month: 'long',
       year: 'numeric'
     })
+
+    this.props.updateDriver('dateOfBirth', dateOfBirth)
   }
 
   togglePicker = (bool) => {
@@ -89,7 +91,6 @@ class EditDriverFormScreen extends React.Component {
   maybeRenderDatePicker = () => {
     if (!this.state.isDatePickerOn) return null
 
-    // todo!!
     return <DatePickerIOS
       date = {new Date(this.props.driver.dateOfBirth)}
       mode = 'date'
