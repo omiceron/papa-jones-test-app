@@ -23,7 +23,8 @@ export default (drivers = new DriversReducerRecord(), action) => {
 
   switch (type) {
     case DRIVER + ADD:
-      return drivers.setIn(['entities', randomId], new DriverRecord({...payload, id: randomId}))
+      return drivers.setIn(['entities', randomId], new DriverRecord({...drivers.tempEntity.toObject(), id: randomId}))
+        .set('tempEntity', new DriverRecord())
 
     case DRIVER + DELETE:
       return drivers.deleteIn(['entities', payload.id])

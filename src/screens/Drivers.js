@@ -20,11 +20,11 @@ class DriversScreen extends React.Component {
   renderItem = ({item}) => <AllBusesDriver
     showDate
     driver = {item}
-    onPress = {() => this.props.navigation.navigate('DriverEditor', {id: item.id})}
+    onPress = {() => this.props.navigation.navigate('DriverEditor', {driver: item})}
   />
 
   handleSubmit = () => {
-    this.props.navigation.push('DriverCreator')
+    this.props.navigation.push('DriverEditor')
   }
 
   render() {

@@ -6,7 +6,6 @@ import TabBarIcon from './TabBarIcon'
 import Home from '../screens/Home'
 import Drivers from '../screens/Drivers'
 import Buses from '../screens/Buses'
-import DriverCreator from '../screens/DriverCreator'
 import BusLink from '../screens/BusLink'
 import Calculated from '../screens/Calculated'
 import BusEditor from '../screens/BusEditor'
@@ -40,7 +39,6 @@ const BusesStack = createStackNavigator({
 
 const DriversStack = createStackNavigator({
   Drivers,
-  DriverCreator,
   DriverEditor,
   BusLink
 }, {

@@ -11,14 +11,16 @@ class BasicButton extends Component {
   }
 
   render() {
-    const {onPress, title, destructive} = this.props
-    return <TouchableOpacity onPress = {onPress}>
-      <View style = {[styles.container, destructive && {backgroundColor: Colors.destructiveColor}]}>
+    const {onPress, title, destructive, inactive} = this.props
+    const InteractionComponent = inactive ? View : TouchableOpacity
+    return <InteractionComponent onPress = {onPress}>
+      <View
+        style = {[styles.container, destructive && styles.destructive, inactive && styles.inactive]}>
         <Text style = {styles.text}>
           {title}
         </Text>
       </View>
-    </TouchableOpacity>
+    </InteractionComponent>
   }
 }
 
@@ -36,6 +38,13 @@ const styles = StyleSheet.create({
     margin: 10,
     fontSize: 17,
     color: '#fff'
+  },
+  destructive: {
+    backgroundColor: Colors.destructiveColor
+  },
+  inactive: {
+    backgroundColor: Colors.inactiveColor
+
   }
 })
 

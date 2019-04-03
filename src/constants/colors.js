@@ -12,5 +12,6 @@ export default {
   noticeBackground: tintColor,
   noticeText: '#fff',
   destructiveColor: '#f03333',
+  inactiveColor: '#CCCCCC',
   placeholderColor: '#C0C0C0',
 }

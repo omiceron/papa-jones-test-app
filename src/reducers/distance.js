@@ -15,7 +15,6 @@ export default (distanceStore = new DistanceReducerRecord(), action) => {
 
   switch (type) {
     case FIND_DISTANCE + END + FAILED:
-      console.log(error)
       return distanceStore
         .set('error', error)
         .set('loading', false)
@@ -27,7 +26,6 @@ export default (distanceStore = new DistanceReducerRecord(), action) => {
         .set('to', payload.to)
         .set('error', null)
         .set('loading', false)
-      console.log(newStore)
       return newStore
 
     case FIND_DISTANCE + START:

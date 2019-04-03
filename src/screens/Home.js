@@ -10,6 +10,7 @@ import {connect} from 'react-redux'
 import {findDistance} from '../actions/index'
 import BasicInput from '../components/common/BasicInput'
 import BasicButton from '../components/common/BasicButton'
+import {Location, Permissions} from 'expo'
 
 @connect(null, {findDistance})
 class HomeScreen extends React.Component {
@@ -19,7 +20,20 @@ class HomeScreen extends React.Component {
 
   state = {
     departure: '',
-    arrival: ''
+    arrival: '',
+    granted: false
+  }
+
+  async componentDidMount() {
+    const {status} = await Permissions.getAsync(Permissions.LOCATION)
+
+    if (status !== 'granted') {
+      const {status} = await Permissions.askAsync(Permissions.LOCATION)
+      this.setState({granted: status === 'granted'})
+    } else {
+      this.setState({granted: status === 'granted'})
+    }
+
   }
 
   setDeparture = (departure) => {
@@ -68,7 +82,7 @@ class HomeScreen extends React.Component {
             returnKeyType = 'done'
           />
 
-          <BasicButton title = 'Find' onPress = {this.handleSubmit}/>
+          <BasicButton title = 'Find' inactive = {!this.state.granted} onPress = {this.handleSubmit}/>
 
         </KeyboardAvoidingView>
 

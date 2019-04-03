@@ -1,4 +1,4 @@
-import {Location} from 'expo'
+import {Location, Permissions} from 'expo'
 import {END, FAILED, START, SUCCESS} from '../constants/actions'
 
 const getHaversineDistance = (firstLocation, secondLocation) => {

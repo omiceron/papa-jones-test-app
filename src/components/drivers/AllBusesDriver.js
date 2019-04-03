@@ -28,7 +28,6 @@ class AllBusesDriver extends React.Component {
 
   render() {
     const {driver, allBuses, distance, ...rest} = this.props
-    console.log(allBuses)
     return (
       <DriverCard {...rest} driver = {driver} LeftComponent = {this.renderAllBuses}/>
     )
