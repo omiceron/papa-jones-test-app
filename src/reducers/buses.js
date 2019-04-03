@@ -22,18 +22,18 @@ export default (buses = new BusesReducerRecord(), action) => {
   switch (type) {
     case BUS + ADD:
       return buses
-        .setIn(['entities', randomId], new BusRecord({...payload, id: randomId}))
+        .setIn(['entities', randomId], new BusRecord({...buses.tempEntity.toObject(), id: randomId}))
         .set('tempEntity', new BusRecord())
 
     case BUS + DELETE:
       return buses.deleteIn(['entities', payload.id])
 
     case BUS + EDIT:
-      return buses.updateIn(['tempEntity', payload.key], () => payload.value)
+      return buses.setIn(['tempEntity', payload.key], payload.value)
 
     case BUS + SAVE:
       return buses
-        .mergeIn(['entities', payload.id], payload)
+        .mergeIn(['entities', payload.id], buses.tempEntity)
         .set('tempEntity', new BusRecord())
 
     case BUS_FORM + CLEAR:

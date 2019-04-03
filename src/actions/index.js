@@ -15,11 +15,9 @@ export function clearBusForm() {
 
 export function saveBus(id) {
   return (dispatch, getState) => {
-    const payload = getState().buses.tempEntity.toObject()
-
     dispatch({
       type: BUS + SAVE,
-      payload: {...payload, id}
+      payload: {id}
     })
   }
 }
@@ -41,11 +39,11 @@ export function findDistance(from, to) {
 
 export function addBus() {
   return (dispatch, getState) => {
-    const payload = getState().buses.tempEntity.toObject()
+    // const payload = getState().buses.tempEntity.toObject()
 
     dispatch({
       type: BUS + ADD,
-      payload,
+      // payload,
       generateId: true
     })
   }
