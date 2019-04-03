@@ -6,33 +6,35 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 import BusCard from '../buses/BusCard'
+import {connect} from 'react-redux'
+import {busToggleSelector} from '../../selectors'
+import {toggleBus} from '../../actions'
 
+@connect((state, props) => ({
+  isSelected: busToggleSelector(state, props)
+}), {toggleBus})
 class BusLinkRow extends React.Component {
-
   static propTypes = {
-    item: PropTypes.object.isRequired,
-    getBuses: PropTypes.func.isRequired,
-    toggleBus: PropTypes.func.isRequired
+    bus: PropTypes.object.isRequired
+  }
+
+  toggleBus = (value) => {
+    this.props.toggleBus(this.props.bus.id, value)
   }
 
   renderSwitch = () => {
-    const {item, getBuses, toggleBus} = this.props
-    const buses = getBuses()
+    const {isSelected} = this.props
 
     return <View style = {styles.switchContainer}>
       <Switch
-        value = {buses.includes(item.id)}
-        onValueChange = {(val) => {
-          toggleBus(item.id, val)
-          this.forceUpdate()
-        }}
+        value = {isSelected}
+        onValueChange = {this.toggleBus}
       />
     </View>
   }
 
   render() {
-    const {item} = this.props
-    return <BusCard bus = {item} LeftComponent = {this.renderSwitch}/>
+    return <BusCard bus = {this.props.bus} LeftComponent = {this.renderSwitch}/>
   }
 }
 

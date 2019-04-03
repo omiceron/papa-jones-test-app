@@ -1,13 +1,16 @@
 import {createSelector} from 'reselect'
 
 export const driversMapSelector = state => state.drivers.get('entities')
+export const tempDriverMapSelector = state => state.drivers.get('tempEntity')
 export const busesMapSelector = state => state.buses.get('entities')
 export const tempBusMapSelector = state => state.buses.get('tempEntity')
 export const distanceSelector = state => state.distance.get('distance')
 export const errorSelector = state => state.distance.get('error')
+export const loadingDistanceSelector = state => state.distance.get('loading')
 
 export const idSelector = (_, props) => props.id
 export const idFromNavigationSelector = (_, props) => props.navigation.state.params.id
+export const busIdSelector = (_, props) => props.bus.id
 export const driverBusesSelector = (_, props) => props.driver.buses
 
 export const driversSelector = createSelector(driversMapSelector, drivers => drivers.valueSeq().toArray())
@@ -47,4 +50,8 @@ export const busSelector = createSelector(busesMapSelector, idFromNavigationSele
 
 export const driverSelector = createSelector(driversMapSelector, idFromNavigationSelector,
   (drivers, id) => drivers.get(id)
+)
+
+export const busToggleSelector = createSelector(tempDriverMapSelector, busIdSelector,
+  (tempDriver, id) => tempDriver.get('buses').includes(id)
 )

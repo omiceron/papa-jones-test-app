@@ -1,7 +1,7 @@
 import React from 'react'
 import BusEditorCore from '../components/buses/BusEditorCore'
 
-class EditBusFormScreen extends React.Component {
+class BusEditorScreen extends React.Component {
   static navigationOptions = ({navigation}) => {
     const {params} = navigation.state
 
@@ -17,4 +17,4 @@ class EditBusFormScreen extends React.Component {
 
 }
 
-export default EditBusFormScreen
+export default BusEditorScreen

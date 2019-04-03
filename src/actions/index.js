@@ -1,15 +1,12 @@
-import {ADD, BUS, BUS_FORM, CLEAR, DELETE, DRIVER, EDIT, FIND_DISTANCE, SAVE, UPDATE} from '../constants/actions'
+import {
+  ADD, BUS, BUS_FORM, CLEAR, DELETE, DRIVER, DRIVER_FORM, EDIT, FIND_DISTANCE, SAVE,
+  UPDATE
+} from '../constants/actions'
 
 export function deleteBus(id) {
   return {
     type: BUS + DELETE,
     payload: {id}
-  }
-}
-
-export function clearBusForm() {
-  return {
-    type: BUS_FORM + CLEAR
   }
 }
 
@@ -29,12 +26,21 @@ export function updateBus(key, value) {
   }
 }
 
-export function findDistance(from, to) {
-  return (dispatch) => dispatch({
-    type: FIND_DISTANCE,
-    findDistance: true,
-    payload: {from, to}
-  })
+export function updateBusForm(id) {
+  return (dispatch) => {
+    if (!id) return
+
+    dispatch({
+      type: BUS_FORM + UPDATE,
+      payload: {id}
+    })
+  }
+}
+
+export function clearBusForm() {
+  return {
+    type: BUS_FORM + CLEAR
+  }
 }
 
 export function addBus() {
@@ -44,6 +50,14 @@ export function addBus() {
       generateId: true
     })
   }
+}
+
+export function findDistance(from, to) {
+  return (dispatch) => dispatch({
+    type: FIND_DISTANCE,
+    findDistance: true,
+    payload: {from, to}
+  })
 }
 
 export function addDriver(driver) {
@@ -61,20 +75,40 @@ export function deleteDriver(id) {
   }
 }
 
-export function saveDriver(params, id) {
+export function saveDriver(id) {
   return {
     type: DRIVER + SAVE,
-    payload: {...params, id}
+    payload: {id}
   }
 }
 
-export function updateBusForm(id) {
+export function updateDriverForm(id) {
   return (dispatch) => {
     if (!id) return
 
     dispatch({
-      type: BUS_FORM + UPDATE,
+      type: DRIVER_FORM + UPDATE,
       payload: {id}
     })
+  }
+}
+
+export function updateDriver(key, value) {
+  return {
+    type: DRIVER_FORM + EDIT,
+    payload: {key, value}
+  }
+}
+
+export function toggleBus(id, value) {
+  return {
+    type: DRIVER_FORM + BUS + (value ? ADD : DELETE),
+    payload: {id}
+  }
+}
+
+export function clearDriverForm() {
+  return {
+    type: DRIVER_FORM + CLEAR
   }
 }

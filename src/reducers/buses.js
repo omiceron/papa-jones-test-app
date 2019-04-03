@@ -28,13 +28,13 @@ export default (buses = new BusesReducerRecord(), action) => {
     case BUS + DELETE:
       return buses.deleteIn(['entities', payload.id])
 
-    case BUS + EDIT:
-      return buses.setIn(['tempEntity', payload.key], payload.value)
-
     case BUS + SAVE:
       return buses
         .mergeIn(['entities', payload.id], buses.tempEntity)
         .set('tempEntity', new BusRecord())
+
+    case BUS + EDIT:
+      return buses.setIn(['tempEntity', payload.key], payload.value)
 
     case BUS_FORM + CLEAR:
       return buses

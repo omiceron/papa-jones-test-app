@@ -7,95 +7,73 @@ import {
   DatePickerIOS,
   LayoutAnimation,
   Keyboard,
+  Alert,
   ScrollView
 } from 'react-native'
 import {connect} from 'react-redux'
-import {driverSelector} from '../selectors'
-import {saveDriver, deleteDriver} from '../actions/index'
+import {tempDriverMapSelector} from '../selectors'
+import {saveDriver, deleteDriver, updateDriver, updateDriverForm, clearDriverForm} from '../actions/index'
 import BasicInput from '../components/common/BasicInput'
 import startCase from 'lodash/startCase'
 import BasicButton from '../components/common/BasicButton'
 import BasicField from '../components/common/BasicField'
 
 // todo platform
-@connect((state, props) => ({driver: driverSelector(state, props)}), {saveDriver, deleteDriver})
+@connect((state, props) => ({
+  driver: tempDriverMapSelector(state, props)
+}), {saveDriver, deleteDriver, updateDriver, updateDriverForm, clearDriverForm})
 class EditDriverFormScreen extends React.Component {
   static navigationOptions = {
     title: 'Edit driver'
   }
 
-  // this is anti-pattern but in this very case
-  // it doesn't matter - values are only for initial values.
-  // Possible salvation from this issue:
-  // 1. special record 'newValues' in current entity
-  // 2. special record 'currentEditingDriver' or smth in store
-
   state = {
-    driver: {
-      firstName: this.props.driver.firstName,
-      middleName: this.props.driver.middleName,
-      lastName: this.props.driver.lastName,
-      dateOfBirth: this.props.driver.dateOfBirth,
-      buses: this.props.driver.buses
-    },
     isDatePickerOn: false
   }
 
+  componentDidMount() {
+    this.props.updateDriverForm(this.props.navigation.state.params.id)
+  }
+
+  componentWillUnmount() {
+    this.props.clearDriverForm()
+  }
+
   handleSubmit = () => {
-    console.log(this.state.driver)
-    if (Object.values(this.state.driver).some(value => !value)) return
-    if (!this.state.driver.buses.count()) return
-    this.props.saveDriver(this.state.driver, this.props.navigation.state.params.id)
+    if (this.props.driver.toSeq().some((value, key) => !value && key !== 'id')) {
+      Alert.alert('All fields are required!')
+      return
+    }
+
+    if (!this.props.driver.buses.count()) {
+      Alert.alert('At least one bus must be chosen!')
+      return
+    }
+    this.props.saveDriver(this.props.navigation.state.params.id)
     this.props.navigation.goBack()
   }
 
   handleLinkBuses = () => {
-    this.props.navigation.push('BusLink', {
-      getBuses: () => this.state.driver.buses,
-      toggleBus: this.toggleBus
-    })
+    this.props.navigation.push('BusLink')
   }
+
+  changeValue = (key) => (value) => this.props.updateDriver(key, value)
 
   handleDelete = () => {
     this.props.deleteDriver(this.props.navigation.state.params.id)
     this.props.navigation.goBack()
   }
 
-  toggleBus = (id, val) => {
-    const buses = val
-      ? this.state.driver.buses.concat(id)
-      : this.state.driver.buses.filter(bus => bus !== id)
-    this.setState({
-      driver: {
-        ...this.state.driver,
-        buses
-      }
-    })
-  }
-
   refs = {}
   inputs = ['firstName', 'middleName', 'lastName']
 
   setRef = (key) => (ref) => this.refs = {...this.refs, [key]: ref}
-  changeValue = (key) => (value) => this.setState({
-    driver: {
-      ...this.state.driver,
-      [key]: value
-    }
-  })
 
   setDate = (date) => {
     const dateOfBirth = date.toLocaleDateString('en-GB', {
       day: '2-digit',
       month: 'long',
       year: 'numeric'
-    })
-
-    this.setState({
-      driver: {
-        ...this.state.driver,
-        dateOfBirth
-      }
     })
   }
 
@@ -111,8 +89,9 @@ class EditDriverFormScreen extends React.Component {
   maybeRenderDatePicker = () => {
     if (!this.state.isDatePickerOn) return null
 
+    // todo!!
     return <DatePickerIOS
-      date = {new Date(this.state.driver.dateOfBirth)}
+      date = {new Date(this.props.driver.dateOfBirth)}
       mode = 'date'
       onDateChange = {this.setDate}
       maximumDate = {new Date()}
@@ -129,7 +108,7 @@ class EditDriverFormScreen extends React.Component {
       key = {input}
       onChangeText = {this.changeValue(input)}
       onFocus = {() => this.togglePicker(false)}
-      value = {this.state.driver[input]}
+      value = {this.props.driver[input]}
       placeholder = {startCase(input)}
       onSubmitEditing = {onSubmitEditing}
       setRef = {this.setRef(input)}
@@ -151,7 +130,7 @@ class EditDriverFormScreen extends React.Component {
 
           <BasicField
             onPress = {this.togglePicker}
-            title = {this.state.driver.dateOfBirth}
+            title = {this.props.driver.dateOfBirth}
             placeholder = {'Date Of Birth'}
           />
 

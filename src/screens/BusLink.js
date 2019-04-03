@@ -15,8 +15,7 @@ class LinkBusToDriverFormScreen extends React.Component {
   }
 
   renderItem = ({item}) => {
-    const {getBuses, toggleBus} = this.props.navigation.state.params
-    return <BusLinkRow item = {item} getBuses = {getBuses} toggleBus = {toggleBus}/>
+    return <BusLinkRow bus = {item}/>
   }
 
   render() {

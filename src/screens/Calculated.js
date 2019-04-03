@@ -3,17 +3,19 @@ import {
   SafeAreaView,
   StyleSheet,
   FlatList,
-  Text
+  Text,
+  ActivityIndicator
 } from 'react-native'
 import {connect} from 'react-redux'
-import {driversSortedSelector, distanceSelector, errorSelector} from '../selectors'
+import {driversSortedSelector, loadingDistanceSelector, distanceSelector, errorSelector} from '../selectors'
 import FastestBusDriver from '../components/drivers/FastestBusDriver'
 
 // todo speed
 @connect(state => ({
   drivers: driversSortedSelector(state),
   distance: distanceSelector(state),
-  error: errorSelector(state)
+  error: errorSelector(state),
+  loading: loadingDistanceSelector(state)
 }))
 class CalculatedListScreen extends React.Component {
   static navigationOptions = {
@@ -23,6 +25,8 @@ class CalculatedListScreen extends React.Component {
   renderItem = ({item}) => <FastestBusDriver driver = {item}/>
 
   render() {
+    if (this.props.loading) return <ActivityIndicator/>
+
     if (this.props.error) return <Text>
       {this.props.error}
     </Text>
@@ -43,19 +47,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
-  },
-  itemContainer: {
-    height: 60,
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    margin: 20,
-    backgroundColor: 'rgba(127,127,127, 0.1)'
-  },
-  itemText: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 10
   }
 })
 
