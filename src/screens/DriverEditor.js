@@ -8,6 +8,8 @@ import {
   LayoutAnimation,
   Keyboard,
   Alert,
+  Platform,
+  DatePickerAndroid,
   ScrollView
 } from 'react-native'
 import {connect} from 'react-redux'
@@ -79,7 +81,26 @@ class EditDriverFormScreen extends React.Component {
     this.props.updateDriver('dateOfBirth', dateOfBirth)
   }
 
-  togglePicker = (bool) => {
+  togglePicker = async (bool) => {
+    if (Platform.OS !== 'ios') {
+      try {
+        const {action, year, month, day} = await DatePickerAndroid.open({
+          date: new Date(),
+          maxDate: new Date(),
+          mode: 'spinner'
+        })
+
+        if (action !== DatePickerAndroid.dismissedAction) {
+          this.setDate(new Date(year, month, day))
+        }
+      } catch ({code, message}) {
+        console.warn('Cannot open date picker', message)
+      }
+
+      return
+
+    }
+
     if (typeof bool !== 'boolean' && !this.state.isDatePickerOn) Keyboard.dismiss()
 
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
@@ -89,7 +110,7 @@ class EditDriverFormScreen extends React.Component {
   }
 
   maybeRenderDatePicker = () => {
-    if (!this.state.isDatePickerOn) return null
+    if (!this.state.isDatePickerOn || Platform.OS !== 'ios') return null
 
     return <DatePickerIOS
       date = {new Date(this.props.driver.dateOfBirth)}
