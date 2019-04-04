@@ -1,4 +1,4 @@
-import {Location, Permissions} from 'expo'
+import {Location} from 'expo'
 import {END, FAILED, START, SUCCESS} from '../constants/actions'
 
 const getHaversineDistance = (firstLocation, secondLocation) => {
@@ -25,10 +25,10 @@ export default store => next => async action => {
   next({...rest, type: type + START})
 
   try {
-    const [[from], [to]] = await
-      Promise.all([action.payload.from, action.payload.to].map(Location.geocodeAsync))
+    const [from] = await Location.geocodeAsync(action.payload.from)
+    const [to] = await Location.geocodeAsync(action.payload.to)
 
-    if (!from || !to) return next({...rest, type: type + END + FAILED, error: 'no coords'})
+    if (!from || !to) return next({...rest, type: type + END + FAILED, error: 'No coords'})
 
     const distance = getHaversineDistance(from, to)
 
@@ -39,6 +39,7 @@ export default store => next => async action => {
     })
 
   } catch (error) {
+
     next({
       ...rest,
       type: type + END + FAILED,

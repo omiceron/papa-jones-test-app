@@ -2,7 +2,6 @@ import React from 'react'
 import {
   Platform,
   StyleSheet,
-  View,
   SafeAreaView,
   KeyboardAvoidingView
 } from 'react-native'
@@ -10,7 +9,7 @@ import {connect} from 'react-redux'
 import {findDistance} from '../actions/index'
 import BasicInput from '../components/common/BasicInput'
 import BasicButton from '../components/common/BasicButton'
-import {Location, Permissions} from 'expo'
+import {Permissions} from 'expo'
 
 @connect(null, {findDistance})
 class HomeScreen extends React.Component {
@@ -25,14 +24,13 @@ class HomeScreen extends React.Component {
   }
 
   async componentDidMount() {
-    const {status} = await Permissions.getAsync(Permissions.LOCATION)
+    let {status} = await Permissions.getAsync(Permissions.LOCATION)
 
     if (status !== 'granted') {
-      const {status} = await Permissions.askAsync(Permissions.LOCATION)
-      this.setState({granted: status === 'granted'})
-    } else {
-      this.setState({granted: status === 'granted'})
+      status = (await Permissions.askAsync(Permissions.LOCATION)).status
     }
+
+    this.setState({granted: status === 'granted'})
 
   }
 
@@ -56,12 +54,11 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style = {styles.container}>
-        <View style = {{flex: 1}}/>
 
         <KeyboardAvoidingView
           behavior = 'position'
           enabled
-          style = {{height: 500, justifyContent: 'center'}}
+          style = {{height: 300, justifyContent: 'center'}}
         >
 
           <BasicInput
@@ -86,7 +83,6 @@ class HomeScreen extends React.Component {
 
         </KeyboardAvoidingView>
 
-        <View style = {{flex: 1}}/>
 
       </SafeAreaView>
     )

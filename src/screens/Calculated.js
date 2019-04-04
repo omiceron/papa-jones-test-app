@@ -3,12 +3,13 @@ import {
   SafeAreaView,
   StyleSheet,
   FlatList,
-  Text,
-  ActivityIndicator
+  Text
 } from 'react-native'
 import {connect} from 'react-redux'
 import {driversSortedSelector, loadingDistanceSelector, distanceSelector, errorSelector} from '../selectors'
 import FastestBusDriver from '../components/drivers/FastestBusDriver'
+import Loader from '../components/common/Loader'
+import ErrorView from '../components/common/ErrorView'
 
 // todo speed
 @connect(state => ({
@@ -25,11 +26,9 @@ class CalculatedListScreen extends React.Component {
   renderItem = ({item}) => <FastestBusDriver driver = {item}/>
 
   render() {
-    if (this.props.loading) return <ActivityIndicator/>
+    if (this.props.loading) return <Loader/>
 
-    if (this.props.error) return <Text>
-      {this.props.error}
-    </Text>
+    if (this.props.error) return <ErrorView error = {this.props.error}/>
 
     return (
       <SafeAreaView style = {styles.container}>

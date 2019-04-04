@@ -12,7 +12,6 @@ import {
   DatePickerAndroid,
   ScrollView
 } from 'react-native'
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 import {connect} from 'react-redux'
 import {tempDriverMapSelector} from '../../selectors'
 import {saveDriver, deleteDriver, updateDriver, updateDriverForm, clearDriverForm, addDriver} from '../../actions/index'
@@ -154,27 +153,25 @@ class DriverEditorCore extends React.Component {
     return (
       <SafeAreaView style = {styles.container}>
 
-        <KeyboardAwareScrollView
-          // style = {{flex: 1}}
-          contentContainerStyle = {{flex: 1, justifyContent: 'center'}}
+        <ScrollView
+          contentContainerStyle = {{flex: 1}}
         >
+          <View style = {{height: 10}}/>
 
-          {this.renderInputs()}
+            {this.renderInputs()}
 
-          <BasicField
-            onPress = {this.togglePicker}
-            title = {this.props.driver.dateOfBirth}
-            placeholder = {'Date Of Birth'}
-          />
+            <BasicField
+              onPress = {this.togglePicker}
+              title = {this.props.driver.dateOfBirth}
+              placeholder = {'Date Of Birth'}
+            />
 
-          {this.maybeRenderDatePicker()}
+            {this.maybeRenderDatePicker()}
+            <BasicButton onPress = {this.handleLinkBuses} title = 'Link buses'/>
+            <BasicButton onPress = {this.handleSubmit} title = {`${this.props.id ? 'Save' : 'Add'} driver`}/>
 
-          <BasicButton onPress = {this.handleLinkBuses} title = 'Link buses'/>
-          <BasicButton onPress = {this.handleSubmit} title = {`${this.props.id ? 'Save' : 'Add'} driver`}/>
-
-          {this.maybeRenderDeleteButton()}
-
-        </KeyboardAwareScrollView>
+            {this.maybeRenderDeleteButton()}
+        </ScrollView>
 
       </SafeAreaView>
     )
